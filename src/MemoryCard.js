@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import "./MemoryCard.css";
 
 class Card extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props);
         this.state = {isFlipped: false};
     }
     clickHandler() {
@@ -18,12 +18,12 @@ class Card extends Component {
         let flipped = "MemoryCardInner flipped";
         return (
             <div className="MemoryCard" onClick={this.clickHandler.bind(this)}>
-                <div className={this.state.isFlipped ? flipped : notFlipped}>
+                <div className={this.props.isFlipped ? flipped : notFlipped}>
                     <div className="MemoryCardBack">
                         <img className="CardImage" src="https://www.digitalcrafts.com/img/DigitalCrafts-Logo-Wrench.png" alt="card" />
                     </div>
                     <div className="MemoryCardFront">
-                        <span>∆</span>
+                        <span>{this.props.symbol}</span>
                     </div>
                 </div>
             </div>
