@@ -42,6 +42,7 @@ class App extends Component {
       pickedCards: []
     }
   }
+  
   unflipCards(card1Index, card2Index){
     let card1 =  {...this.state.deck[card1Index]};
     let card2 =  {...this.state.deck[card2Index]};
@@ -64,6 +65,7 @@ class App extends Component {
     cardToFlip.isFlipped = true;
 
     let newPickedCards = this.state.pickedCards.concat(cardIndex);
+
     let newDeck = this.state.deck.map((card, index) => {
 
       if(cardIndex === index){return cardToFlip};
@@ -79,13 +81,19 @@ class App extends Component {
       }
       newPickedCards = [];
     }
+    let checkGameBoard = newDeck.every((card) => {
+      return card.isFlipped === true;
+    })
+    if(checkGameBoard){
+      newDeck = generateDeck();
+      newPickedCards = [];
 
+    }
     this.setState({
       deck: newDeck,
       pickedCards: newPickedCards
     })
   }
-
   
   render() {
     let cardsJSX = this.state.deck.map((card, index) => {
