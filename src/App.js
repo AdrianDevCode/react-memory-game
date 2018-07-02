@@ -3,17 +3,27 @@ import './App.css';
 import Card from "./MemoryCard.js";
 
 let generateDeck = () => {
-  let symbols = ['∆','ß','£','§','•','$','+','ø'];
+  let HTML = [];
+  //let symbols = ['∆','ß','£','§','•','$','+','ø'];
   let deck = [];
-
+  fetch("http://thecatapi.com/api/images/get?format=html&results_per_page=8&size=small&type=gif")
+  .then((data) => {return data.text();})
+  .then((html) => {HTML.push(html.split('\n'));
+    // HTML.pop();
+  })
+  console.log(HTML[0]);
+  
   for(let i = 0; i < 16; i++){
     deck.push({
         isFlipped: false,
-        symbol: symbols[i%8]
+        symbol: HTML[i%8]
+        
     });
+    console.log(HTML[0]);
   }
   shuffle(deck);
   return deck;
+  
 }
 
 let shuffle = a => {
@@ -32,6 +42,7 @@ class App extends Component {
       pickedCards: []
     }
   }
+  
   unflipCards(card1Index, card2Index){
     let card1 =  {...this.state.deck[card1Index]};
     let card2 =  {...this.state.deck[card2Index]};
@@ -54,6 +65,7 @@ class App extends Component {
     cardToFlip.isFlipped = true;
 
     let newPickedCards = this.state.pickedCards.concat(cardIndex);
+
     let newDeck = this.state.deck.map((card, index) => {
 
       if(cardIndex === index){return cardToFlip};
@@ -69,13 +81,19 @@ class App extends Component {
       }
       newPickedCards = [];
     }
+    let checkGameBoard = newDeck.every((card) => {
+      return card.isFlipped === true;
+    })
+    if(checkGameBoard){
+      newDeck = generateDeck();
+      newPickedCards = [];
 
+    }
     this.setState({
       deck: newDeck,
       pickedCards: newPickedCards
     })
   }
-
   
   render() {
     let cardsJSX = this.state.deck.map((card, index) => {
@@ -94,6 +112,7 @@ class App extends Component {
           <div>{cardsJSX.slice(4,8)}</div>
           <div>{cardsJSX.slice(8,12)}</div>
           <div>{cardsJSX.slice(12,16)}</div>
+        
         </header>
       </div>
     );
