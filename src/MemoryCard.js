@@ -13,7 +13,7 @@ class Card extends Component {
                         <img className="CardImage" src="https://www.digitalcrafts.com/img/DigitalCrafts-Logo-Wrench.png" alt="card" />
                     </div>
                     <div className="MemoryCardFront">
-                        <span>{this.props.symbol}</span>
+                        {this.props.symbol}
                     </div>
                 </div>
             </div>
