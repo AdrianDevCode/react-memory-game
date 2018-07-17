@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import {Link, Route, Switch} from 'react-router-dom';
 import MemoryGame from './MemoryGame';
-import Ajax from './Ajax';
+import Jobs from './Jobs';
 
 class App extends Component {
     render() {
@@ -10,13 +10,14 @@ class App extends Component {
             <div>
                 <div className="navbar">
                     <Link to="/memory">Memory Game</Link>
-                    <Link to="/ajax">Ajax</Link>
+                    <Link to="/jobs">Jobs</Link>
+                    
                 </div>
-                <Switch>
-                    <Route path="/" component={MemoryGame}/>
+               
+                    <Switch>
                     <Route path="/memory" component={MemoryGame}/>
-                    <Route path="/ajax" component={Ajax}/>
-                </Switch>
+                    <Route path="/jobs" component={Jobs}/>
+                    </Switch>
             </div>
         )
     }
