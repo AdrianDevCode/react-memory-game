@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import "./Jobs.css";
+import {Route, Switch} from "react-router-dom";
 import JobsListItem from "./JobsListItem";
 import axios from "axios";
-
+import Job from "./Job";
 
 class Jobs extends Component {
     constructor() {
@@ -11,11 +12,9 @@ class Jobs extends Component {
             jobs: [],
             
         }
-
     }
-    componentWillMount() {
-        axios.defaults.withCredentials = true;
-        axios.get("http://localhost:3001/api/jobs/")
+    componentWillMount() {   
+        axios.get("/api/jobs/")
         .then(data => {
             this.setState({
                 jobs: data.data
@@ -36,7 +35,10 @@ class Jobs extends Component {
                         <p className="App-subtitle">Click to explore jobs</p>
                     </header>
                 </div>
-               {jobsJSX}
+               <Switch>
+                   <Route exact path="/jobs" render={() => jobsJSX} />
+                   <Route path="/jobs/:id" component={Job} />
+               </Switch>
             </div>
         );
     }
